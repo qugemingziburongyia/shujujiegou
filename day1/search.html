@@ -1,0 +1,71 @@
+<!--
+ * @Description: 
+ * @Autor: xuzp4
+ * @Date: 2020-03-08 19:51:30
+ * @LastEditors: xuzp4
+ * @LastEditTime: 2020-03-08 20:19:47
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <ul>
+            <li>
+                <a href=""></a>
+            </li>
+            <li></li>
+            <li>
+                <div></div>
+                <div></div>
+            </li>
+        </ul>
+        <div></div>
+        <div></div>
+    </div>
+    <script>
+        // 最后的儿子往前面插 unshift
+        // 拿出先插入的儿子,找孙子再往前插
+        // 循环拿出先插入的
+
+        // function depth_first_search(node) {
+        //     let stack = [node];
+        //     while (stack.length) {
+        //         let item = stack.pop();
+        //         console.log(item.tagName);
+        //         for (let i = item.children.length - 1; i >= 0; i--) {
+        //             stack.push(item.children[i])
+        //         }
+        //     }
+
+        // }
+        // const root = document.getElementById('root');
+        // depth_first_search(root)
+
+        // [ul,div,div]
+        // 
+        
+        function *breadth_first_search(node) {
+            let queue = [node]
+            while (queue.length) {
+                let item = queue.pop();
+                yield item.tagName;
+                for (let i = item.children.length-1;i>=0;i--) {
+                    queue.unshift(item.children[i])
+                }
+            }
+        }
+        const root = document.getElementById('root');
+        const iterator = breadth_first_search(root)
+        console.log([...iterator]);
+    </script>
+</body>
+
+</html>
