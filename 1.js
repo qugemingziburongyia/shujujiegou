@@ -43,6 +43,29 @@ function solve(arr,N) {
     return s.has(0)
 }
 
-console.log(solve([1,2,3],4))
+// console.log(solve([1,2,3],4))
+function fibonacci0(n) {
+  return n===1 || n ===2 ? 1 : fibonacci0(n-1) + fibonacci0(n-2)
+}
+
+
+function fibonacci(n) {
+  return Array(n).fill().reduce(([a,b],_) => {
+    return [b,a+b]
+  },[0,1])[1]
+}
+// console.log(fibonacci(9));
+
+function *sieve_premise(n) {
+  let numbers = Array.from({length:n-2},(_,i) => i+2) // N
+  let p = null;
+  while(p = numbers.shift()) {
+    yield p;
+    numbers =  numbers.filter(t => t % p !== 0) // N
+  }
+  return numbers
+}
+const it = sieve_premise(100000)
+console.log([...it]) 
 
 
