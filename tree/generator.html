@@ -1,0 +1,48 @@
+<!--
+ * @Description: 
+ * @Autor: xuzp4
+ * @Date: 2020-03-11 21:47:58
+ * @LastEditors: xuzp4
+ * @LastEditTime: 2020-03-11 21:55:29
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function request(url) {
+            return cb => {
+                setTimeout(() => {
+                    cb(Math.random())
+                }, 1000)
+            }
+        }
+
+        create_runner(function* () {
+            const val1 = yield request('some url')
+            const val2 = yield request('some url')
+            console.log(val1,val2)
+        })()
+
+        function create_runner(genFunc) {
+            const it = genFunc()
+
+            function run(data) {
+                const itVal = it.next(data)
+                if (!itVal.done) {
+                    itVal.value(run)
+                }
+            }
+            return run;
+        }
+    </script>
+</body>
+
+</html>
